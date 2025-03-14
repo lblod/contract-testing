@@ -1,0 +1,27 @@
+{
+  "name": "mu-contract-tests",
+  "version": "0.0.1",
+  "description": "Helper functions for the contract testing",
+  "main": "index.js",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc --build"
+  },
+  "dependencies": {
+    "@lblod/mu-auth-sudo": "^0.6.1",
+    "body-parser": "^1.20.3",
+    "express": "^4.21.2",
+    "express-http-context": "^1.2.4",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@types/uuid": "^10.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  },
+  "peerDependencies": {
+    "jest": "^29.7.0"
+  }
+}
