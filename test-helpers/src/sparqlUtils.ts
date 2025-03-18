@@ -71,6 +71,32 @@ export async function getDeltas() {
   return globalThis.deltas;
 }
 
+export async function getDeltaInserts() {
+  const deltas = await getDeltas();
+  return deltas
+    .flat()
+    .map((delta) => delta.inserts)
+    .flat();
+}
+
+export async function getDeltaDeletes() {
+  const deltas = await getDeltas();
+  return deltas
+    .flat()
+    .map((delta) => delta.deletes)
+    .flat();
+}
+
+export async function expectDeltaInsert(partialQuad: Partial<Quad>) {
+  const inserts = await getDeltaInserts();
+  expect(inserts).toContainEqual(expect.objectContaining(partialQuad));
+}
+
+export async function expectDeltaDelete(partialQuad: Partial<Quad>) {
+  const deletes = await getDeltaDeletes();
+  expect(deletes).toContainEqual(expect.objectContaining(partialQuad));
+}
+
 export async function clearDeltas() {
   await new Promise((resolve) => setTimeout(resolve, deltaPropagationTimeout));
   globalThis.deltas.splice(0, globalThis.deltas.length);
