@@ -7,7 +7,9 @@ This repo adds contract testing to microservices in the semantic.works architect
 
 You can run the tests by:
 
-- building https://github.com/lblod/contract-testing as `local-contract-tests`
+- using this image (published on dockerhub or built locally if you prefer)
+- make sure your toLoad folder is present if you require a base setup of your database
+- remove and build the target image (important if you use contract testing in different projects)
 - running `docker compose up -V  --abort-on-container-exit` in this directory
 
 This will attach to the test container, which will end with a report on whether the tests passed (or which ones failed). The tests are built on top of jest and also track snapshots in a snapshots directory.
