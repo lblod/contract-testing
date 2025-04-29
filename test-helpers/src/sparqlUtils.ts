@@ -45,7 +45,7 @@ export async function expectQueryToHaveNoResults(
 export async function expectUserQueryToHaveResults(query: string) {
   const result = await querySudo(query, {
     "mu-auth-sudo": "false",
-    "mu-session-id": getSession(),
+    "mu-session-id": await getSession(),
   });
   expect(result.results.bindings.length).toBeGreaterThan(0);
 }
@@ -53,7 +53,7 @@ export async function expectUserQueryToHaveResults(query: string) {
 export async function runUserQuery(query: string) {
   const result = await querySudo(query, {
     "mu-auth-sudo": "false",
-    "mu-session-id": getSession(),
+    "mu-session-id": await getSession(),
   });
   return result.results.bindings;
 }
@@ -61,7 +61,7 @@ export async function runUserQuery(query: string) {
 export async function expectUserQueryToHaveNoResults(query: string) {
   const result = await querySudo(query, {
     "mu-auth-sudo": "false",
-    "mu-session-id": getSession(),
+    "mu-session-id": await getSession(),
   });
   expect(result.results.bindings.length).toBe(0);
 }
