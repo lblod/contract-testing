@@ -20,7 +20,7 @@ An example of this can be found here: https://github.com/lblod/mandataris-servic
 
 ### Waits for SEAS database to be up and running
 
-The tests are only started once the DB is ready
+The tests are only started once the DB and the deltanotifier are ready. The deltanotifier endpoint can be specified by setting `DELTA_ENDPOINT`, which defaults to `http://deltanotifier/`
 
 ### Log in as a group/role/account
 

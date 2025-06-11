@@ -6,6 +6,12 @@ const { querySudo } = require("@lblod/mu-auth-sudo");
 
 const NodeEnvironment = require("jest-environment-node").TestEnvironment;
 
+const deltaEndpoint = process.env.DELTA_ENDPOINT || "http://deltanotifier/";
+
+async function waitForSeas() {
+  await waitForDatabase();
+  await waitForDeltaNotifier();
+}
 async function waitForDatabase() {
   let maxRetries = 20;
   while (maxRetries > 0) {
@@ -28,13 +34,34 @@ async function waitForDatabase() {
   }
 }
 
+async function waitForDeltaNotifier() {
+  console.log("Waiting for delta notifier to be ready");
+  let maxRetries = 20;
+  while (maxRetries > 0) {
+    try {
+      const result = await fetch(deltaEndpoint);
+      if (result.ok) {
+        console.log("Delta notifier ready");
+        return;
+      } else {
+        throw new Error("Delta notifier not ready yet");
+      }
+    } catch (e) {
+      console.log("Delta notifier not ready yet, retrying in 1s");
+    } finally {
+      maxRetries--;
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+  }
+}
+
 class ExpressEnvironment extends NodeEnvironment {
   constructor(config, context) {
     super(config, context);
   }
 
   async setup() {
-    await waitForDatabase();
+    await waitForSeas();
     await super.setup();
     let server;
     const deltas = [];
